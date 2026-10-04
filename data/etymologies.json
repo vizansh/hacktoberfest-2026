@@ -1,0 +1,98 @@
+{
+  "war": {
+    "language": "English",
+    "root": "war",
+    "etymology": "From Old North French werre and related Germanic forms meaning conflict or strife; not descended from Latin bellum.",
+    "prefix_suffix": "No clear productive prefix or suffix in the modern English form.",
+    "confidence": "likely",
+    "source": "https://en.wiktionary.org/wiki/war"
+  },
+  "bellum": {
+    "language": "Latin",
+    "root": "bellum",
+    "etymology": "Latin bellum means war. Its deeper Indo-European history is debated, so no more specific root is asserted here.",
+    "prefix_suffix": "No clear productive prefix or suffix in the Latin noun bellum.",
+    "confidence": "high",
+    "source": "https://en.wiktionary.org/wiki/bellum"
+  },
+  "guerra": {
+    "language": "Spanish, Portuguese, Italian",
+    "root": "guerra",
+    "etymology": "Romance guerra forms come through Old French/Frankish forms related to conflict; they are not descendants of Latin bellum.",
+    "prefix_suffix": "The final -a is part of the noun form; no productive prefix is established in this word.",
+    "confidence": "likely",
+    "source": "https://en.wiktionary.org/wiki/guerra"
+  },
+  "guerre": {
+    "language": "French",
+    "root": "guerre",
+    "etymology": "From Old French guerre, ultimately associated with Germanic or Frankish forms for conflict; not from Latin bellum.",
+    "prefix_suffix": "No clear productive prefix or suffix in the modern French noun guerre.",
+    "confidence": "likely",
+    "source": "https://en.wiktionary.org/wiki/guerre"
+  },
+  "house": {
+    "language": "English",
+    "root": "house",
+    "etymology": "From Old English hus through Proto-Germanic *husą; a deeper connection with a Proto-Indo-European root meaning cover or hide is possible but not certain.",
+    "prefix_suffix": "No clear productive prefix or suffix in the modern English form.",
+    "confidence": "likely",
+    "source": "https://en.wiktionary.org/wiki/house"
+  },
+  "water": {
+    "language": "English",
+    "root": "water",
+    "etymology": "From Old English wæter and Proto-Germanic *watōr, related to the reconstructed Indo-European word for water, *wódr̥.",
+    "prefix_suffix": "No clear productive prefix or suffix in the modern English form.",
+    "confidence": "high",
+    "source": "https://en.wiktionary.org/wiki/water"
+  },
+  "night": {
+    "language": "English",
+    "root": "night",
+    "etymology": "From Old English niht and Proto-Germanic *nahts, related to the widespread Indo-European night-word family.",
+    "prefix_suffix": "No clear productive prefix or suffix in the modern English form.",
+    "confidence": "high",
+    "source": "https://en.wiktionary.org/wiki/night"
+  },
+  "love": {
+    "language": "English",
+    "root": "love",
+    "etymology": "From Old English lufu through Proto-Germanic *lubō, related to an Indo-European root associated with love, care, or desire.",
+    "prefix_suffix": "No clear productive prefix or suffix in the modern English noun.",
+    "confidence": "high",
+    "source": "https://en.wiktionary.org/wiki/love"
+  },
+  "fire": {
+    "language": "English",
+    "root": "fire",
+    "etymology": "From Old English fȳr through Germanic forms, ultimately related to the reconstructed Indo-European word *péh₂wr̥ for fire.",
+    "prefix_suffix": "No clear productive prefix or suffix in the modern English form.",
+    "confidence": "high",
+    "source": "https://en.wiktionary.org/wiki/fire"
+  },
+  "father": {
+    "language": "English",
+    "root": "father",
+    "etymology": "From Old English fæder and Proto-Germanic forms, related to the reconstructed Indo-European kinship word *ph₂tḗr.",
+    "prefix_suffix": "No clear productive prefix or suffix in the modern English form.",
+    "confidence": "high",
+    "source": "https://en.wiktionary.org/wiki/father"
+  },
+  "mother": {
+    "language": "English",
+    "root": "mother",
+    "etymology": "From Old English mōdor and Proto-Germanic forms, related to the reconstructed Indo-European kinship word *méh₂tēr.",
+    "prefix_suffix": "No clear productive prefix or suffix in the modern English form.",
+    "confidence": "high",
+    "source": "https://en.wiktionary.org/wiki/mother"
+  },
+  "friend": {
+    "language": "English",
+    "root": "friend",
+    "etymology": "From Old English frēond, a present participle related to the Germanic root for loving or caring; it is related to the wider Germanic friend-word family.",
+    "prefix_suffix": "The modern form has no clear productive prefix; the ending reflects historical word formation rather than a productive modern suffix.",
+    "confidence": "likely",
+    "source": "https://en.wiktionary.org/wiki/friend"
+  }
+}

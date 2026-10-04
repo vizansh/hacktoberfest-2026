@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Words · Language Map</title>
+<style>
+:root{--ink:#111;--muted:#6b6b6b;--line:#e8e8e8;--blue:#315efb;--blue-soft:#f1f4ff}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font:16px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{width:min(980px,100%);margin:auto;padding:32px 28px 72px}
+header{border-bottom:1px solid var(--line);padding-bottom:24px}
+.logo{font-size:21px;font-weight:750;letter-spacing:-.03em}
+.intro{margin:72px 0 34px}.intro h1{margin:0;font-size:clamp(40px,7vw,68px);line-height:1;letter-spacing:-.06em}
+.intro p{color:var(--muted);font-size:18px;margin:18px 0 0}
+label{display:grid;gap:7px;color:var(--muted);font-size:13px;font-weight:700}
+input,select,button{font:inherit}input,select{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+button{margin-top:18px;padding:13px 18px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-weight:700;cursor:pointer}
+.status{min-height:27px;margin:18px 0;color:var(--muted)}.error{color:#b42318}
+.results{border-top:1px solid var(--line);padding-top:28px}.results h2{margin:0;font-size:34px;letter-spacing:-.04em}
+.concept{color:var(--muted);margin:4px 0 22px}.bar{display:flex;align-items:center;justify-content:space-between;gap:18px;border:1px solid var(--line);border-radius:12px;padding:15px 17px;margin:10px 0}
+.bar.source{border-color:#aebcff;background:var(--blue-soft)}.bar small{display:block;color:var(--muted)}.bar strong{font-size:22px}.relation{color:var(--muted);font-size:13px;text-align:right}
+.notes{margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}.notes h3{font-size:15px;margin:0 0 8px}.notes p{color:var(--muted);margin:5px 0}
+.word-link{border:0;background:none;color:var(--ink);font:inherit;font-size:22px;font-weight:700;padding:0;cursor:pointer;text-decoration:none}
+.word-link:hover{color:var(--muted)}
+.modal-backdrop{position:fixed;inset:0;display:grid;place-items:center;padding:24px;background:#1118;z-index:2}
+.modal{width:min(560px,100%);max-height:85vh;overflow:auto;background:#fff;border-radius:18px;padding:26px;box-shadow:0 20px 70px #1115}
+.modal-head{display:flex;justify-content:space-between;gap:18px;align-items:start}.modal h2{margin:0;font-size:30px;letter-spacing:-.04em}.modal-close{border:0;background:transparent;color:var(--muted);font-size:28px;line-height:1;cursor:pointer;padding:0}.modal p{color:var(--muted);margin:12px 0}
+@media(max-width:650px){main{padding:24px 20px 48px}.intro{margin-top:56px}.bar{align-items:flex-start;flex-direction:column;gap:4px}.relation{text-align:left}}
+</style>
+</head>
+<body>
+<main>
+  <header><div class="logo">Language Map</div></header>
+  <section class="intro">
+    <h1>Explore a word.</h1>
+    <p>See how it changes across related languages.</p>
+  </section>
+  <form id="search">
+    <label>Word
+      <input id="word" placeholder="Try: casa, agua, noche, amigo" autocomplete="off">
+    </label>
+    <button type="submit">Explore word</button>
+  </form>
+  <div class="status" id="status" aria-live="polite"></div>
+  <section class="results" id="results" hidden></section>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function render(data){window.wordData=data;$('#results').hidden=false;$('#results').innerHTML=`<h2>${esc(data.input)}</h2><p class="concept">${esc(data.detected_language)} · ${esc(data.concept)} · ${esc(data.source)}</p>${data.translations.map((x,i)=>`<article class="bar"><div><small>${esc(x.language)}</small><button class="word-link" type="button" data-index="${i}">${esc(x.word)}</button><small>${esc(x.root)}</small></div><span class="relation">${esc(x.relation)}<br>${esc(x.prefix_suffix)}</span></article>`).join('')}<div class="notes"><h3>What to notice</h3>${data.translations.map(x=>`<p><strong>${esc(x.language)}:</strong> ${esc(x.explanation)} <em>${esc(x.etymology)}</em></p>`).join('')}${data.notes.map(x=>`<p>${esc(x)}</p>`).join('')}</div>`;document.querySelectorAll('.word-link').forEach(button=>button.addEventListener('click',()=>openMeaning(data.translations[button.dataset.index])))}
+function openMeaning(item){const modal=document.createElement('div');modal.className='modal-backdrop';modal.innerHTML=`<section class="modal" role="dialog" aria-modal="true" aria-labelledby="meaning-title"><div class="modal-head"><div><h2 id="meaning-title">${esc(item.word)}</h2><p>${esc(item.language)}</p></div><button class="modal-close" type="button" aria-label="Close">×</button></div><p><strong>Root clue:</strong> ${esc(item.root)}</p><p><strong>Etymology:</strong> ${esc(item.etymology)}</p><p><strong>Prefix and suffix rules:</strong> ${esc(item.prefix_suffix)}</p><p>${esc(item.explanation)}</p></section>`;document.body.append(modal);const close=()=>modal.remove();modal.querySelector('.modal-close').onclick=close;modal.addEventListener('click',event=>{if(event.target===modal)close()})}
+$('#search').addEventListener('submit',async event=>{event.preventDefault();const word=$('#word').value.trim();if(!word){$('#status').textContent='Type a word to begin.';return}$('#status').textContent='Gemma is analyzing the word…';$('#results').hidden=true;const params=new URLSearchParams({word});try{const r=await fetch('/api/word?'+params);const data=await r.json();if(!r.ok)throw new Error(data.error);render(data);$('#status').textContent=''}catch(e){$('#status').innerHTML=`<span class="error">${esc(e.message)}</span>`}});
+</script>
+</body>
+</html>

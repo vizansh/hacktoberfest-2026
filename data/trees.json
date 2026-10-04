@@ -1,0 +1,9 @@
+{
+  "language_families": {
+    "Indo-European": {"Italic": {"Latin": ["Latin"],
+                                  "Romance": {"Ibero-Romance": ["Spanish","Portuguese"],
+                "Gallo-Romance": ["French"],
+                "Italo-Romance": ["Italian"]}},
+                  "Germanic": ["English"]}
+  }
+}

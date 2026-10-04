@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phrases · Language Map</title>
+<style>
+:root{--ink:#111;--muted:#6b6b6b;--line:#e8e8e8;--blue:#315efb;--blue-soft:#f1f4ff}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font:16px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+main{width:min(980px,100%);margin:auto;padding:32px 28px 72px}
+header{border-bottom:1px solid var(--line);padding-bottom:24px}.logo{font-size:21px;font-weight:750;letter-spacing:-.03em}
+.intro{margin:72px 0 34px}.intro h1{margin:0;font-size:clamp(40px,7vw,68px);line-height:1;letter-spacing:-.06em}.intro p{color:var(--muted);font-size:18px;margin:18px 0 0}
+label{display:grid;gap:7px;color:var(--muted);font-size:13px;font-weight:700}
+textarea,button{font:inherit}textarea{width:100%;min-height:110px;padding:13px;border:1px solid var(--line);border-radius:10px;resize:vertical;color:var(--ink)}
+button{margin-top:18px;padding:13px 18px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-weight:700;cursor:pointer}
+.status{min-height:27px;margin:18px 0;color:var(--muted)}.error{color:#b42318}
+.results{border-top:1px solid var(--line);padding-top:28px}.results h2{margin:0;font-size:34px;letter-spacing:-.04em}.concept{color:var(--muted);margin:4px 0 22px}
+.bar{border:1px solid var(--line);border-radius:12px;padding:17px;margin:10px 0}.bar h3{margin:0 0 10px;font-size:21px}.bar p{margin:8px 0;color:var(--muted)}.bar strong{color:var(--ink)}
+.root-mark,.structure-mark{padding:1px 4px;border-radius:5px;color:var(--ink)}.root-mark{background:var(--blue-soft);box-shadow:inset 0 -2px 0 var(--blue)}.structure-mark{background:#f4f4f4;box-shadow:inset 0 -2px 0 #999}
+.notes{margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}.notes h3{font-size:15px;margin:0 0 8px}.notes p{color:var(--muted);margin:5px 0}
+@media(max-width:650px){main{padding:24px 20px 48px}.intro{margin-top:56px}}
+</style>
+</head>
+<body>
+<main>
+  <header><div class="logo">Language Map</div></header>
+  <section class="intro">
+    <h1>Compare a phrase.</h1>
+    <p>See how the words, roots, and sentence structure move across languages.</p>
+  </section>
+  <form id="search">
+    <label>Write a short sentence
+      <textarea id="sentence" placeholder="Try: The house is very big."></textarea>
+    </label>
+    <button type="submit">Compare phrase</button>
+  </form>
+  <div class="status" id="status" aria-live="polite"></div>
+  <section class="results" id="results" hidden></section>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function marked(sentence, rootWords, structureWords){const roots=new Set((rootWords||[]).map(x=>x.toLowerCase()));const structures=new Set((structureWords||[]).map(x=>x.toLowerCase()));return sentence.split(/(\s+)/).map(part=>{const key=part.toLowerCase().replace(/[.,!?;:]+$/,'');if(roots.has(key))return `<span class="root-mark">${esc(part)}</span>`;if(structures.has(key))return `<span class="structure-mark">${esc(part)}</span>`;return esc(part)}).join('')}
+function render(data){$('#results').hidden=false;$('#results').innerHTML=`<h2>${esc(data.input)}</h2><p class="concept">${esc(data.detected_language)} · ${esc(data.source)}</p>${data.translations.map(x=>`<article class="bar"><h3>${esc(x.language)}</h3><p><strong>Translation:</strong> ${marked(x.sentence,x.root_words,x.structure_words)}</p><p><strong>Word and root changes:</strong> ${esc(x.word_changes)}</p><p><strong>Root etymology:</strong> ${esc(x.root_etymology)}</p><p><strong>Prefix and suffix changes:</strong> ${esc(x.prefix_suffix_changes)}</p><p><strong>Sentence structure:</strong> ${esc(x.structure_change)}</p></article>`).join('')}<div class="notes"><h3>What to notice</h3>${data.notes.map(x=>`<p>${esc(x)}</p>`).join('')}</div>`}
+$('#search').addEventListener('submit',async event=>{event.preventDefault();const sentence=$('#sentence').value.trim();if(!sentence){$('#status').textContent='Write a short sentence to begin.';return}$('#status').textContent='Gemma is comparing the phrase…';$('#results').hidden=true;const params=new URLSearchParams({sentence});try{const r=await fetch('/api/phrase?'+params);const data=await r.json();if(!r.ok)throw new Error(data.error);render(data);$('#status').textContent=''}catch(e){$('#status').innerHTML=`<span class="error">${esc(e.message)}</span>`}});
+</script>
+</body>
+</html>
