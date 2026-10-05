@@ -42,6 +42,10 @@ so the model is not asked to invent historical claims from nothing.
 - Ollama
 - The `gemma4:e2b` model
 
+The app can run on a CPU, but a GPU is strongly preferred for a responsive
+interactive experience. Gemma inference can be noticeably slower on CPU-only
+hardware, especially for phrase comparisons and longer requests.
+
 The model is not stored in this repository.
 
 ## Setup
