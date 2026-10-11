@@ -31,10 +31,4 @@ A lightweight, time-gated desktop assistant built with Python and Google's open-
 2. **Run the Application:**
     ```bash 
     python touch_grass.py
-
----
-
-### What to Do Next:
-1. Save this updated content into your `README.md` file inside the `GrassRoots` folder.
-2. Push your folder and files to `[https://github.com/vizansh/hacktoberfest-2026/tree/main/GrassRoots](https://github.com/vizansh/hacktoberfest-2026/tree/main/GrassRoots)`.
-3. Head over to the [Hacktoberfest Open-Source AI Challenge: Week 1](https://dev.to/challenges/hacktoberfest-week1-2026-10-05) page, publish your DEV post, select the **Best Use of Gemma** partner category, and lock in your Week 1 submission!
+    
