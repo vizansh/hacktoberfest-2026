@@ -1,0 +1,3 @@
+# GrassRoots Dependencies
+# Note: tkinter, json, urllib, datetime, time, and winsound are part of the Python Standard Library.
+# Ensure Ollama is running locally with Gemma for AI inference: https://ollama.com/
